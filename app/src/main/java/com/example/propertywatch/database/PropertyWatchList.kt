@@ -5,10 +5,10 @@ import androidx.room.PrimaryKey
 import java.util.UUID
 
 @Entity
-
-data class PropertyWatchList (
+data class PropertyWatchList(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val address: String,
     val price: Int,
     val phone: String,
+
 )

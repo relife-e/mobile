@@ -8,13 +8,11 @@ import androidx.room.Update
 
 @Dao
 interface PropertyDao {
+    @Query("SELECT * FROM PropertyWatchList")
+    fun getProperties(): LiveData<List<PropertyWatchList>>
 
-
-    @Query("SELECT * FROM propertyWatchList")
-    fun getPropertites(): LiveData<List<PropertyWatchList>>
-
-    @Query("SELECT * FROM PropertyWatchList WHERE id=(:id)")
-    fun getPropertyId(id: String): LiveData<PropertyWatchList?>
+    @Query("SELECT * FROM PropertyWatchList WHERE id = :id")
+    fun getPropertyById(id: String): LiveData<PropertyWatchList?>
 
     @Update
     fun updateProperty(propertyWatchList: PropertyWatchList)
@@ -23,5 +21,5 @@ interface PropertyDao {
     fun addProperty(propertyWatchList: PropertyWatchList)
 
     @Insert
-    fun addPropertities(propertyWatchList: List<PropertyWatchList>)
+    fun addProperties(propertyWatchList: List<PropertyWatchList>)
 }

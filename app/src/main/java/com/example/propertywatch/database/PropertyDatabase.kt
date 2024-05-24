@@ -1,11 +1,11 @@
+package com.example.propertywatch.database
+
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.propertywatch.database.PropertyDao
-import com.example.propertywatch.database.PropertyWatchList
 
-@Database(entities = [PropertyWatchList::class], version = 5, exportSchema = false)
+@Database(entities = [PropertyWatchList::class], version = 6, exportSchema = false)
 abstract class PropertyDatabase : RoomDatabase() {
     abstract fun propertyDao(): PropertyDao
 
