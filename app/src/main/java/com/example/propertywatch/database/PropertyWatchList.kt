@@ -10,5 +10,7 @@ data class PropertyWatchList(
     val address: String,
     val price: Int,
     val phone: String,
+    val lat: Double,
+    val lon: Double
 
 )
