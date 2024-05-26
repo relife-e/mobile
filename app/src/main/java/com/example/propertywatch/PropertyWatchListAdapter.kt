@@ -1,4 +1,4 @@
-package com.example.propertywatch
+package com.example.myapplication
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.propertywatch.Maps.MapsActivity
+import com.example.propertywatch.R
 import com.example.propertywatch.database.PropertyWatchList
 
 class PropertyWatchListAdapter(private val properties: List<PropertyWatchList>) : RecyclerView.Adapter<PropertyWatchListAdapter.ViewHolder>() {

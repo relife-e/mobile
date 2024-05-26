@@ -1,0 +1,31 @@
+{
+	"properties":{
+		"size" : "3",
+		"property" : [
+			{
+				"id" : "fe6962d6-d95f-11ec-9d64-0242ac120002",
+				"address" : "19-21 Macdonnell St, Manunda",
+				"price" : 530000,
+				"phone" : "0408376529",
+				"lat" : -16.913274,
+				"lon" : 145.747064
+			},
+			{
+				"id" : "fe69657e-d95f-11ec-9d64-0242ac120002",
+				"address" : "249A McLeod St, Cairns North",
+				"price" : 679000,
+				"phone" : "0403359652",
+				"lat" : -16.908549,
+				"lon" : 145.759398
+			},
+			{
+				"id" : "fe6966be-d95f-11ec-9d64-0242ac120002",
+				"address" : "59 Grove St, Parramatta Park",
+				"price" : 730000,
+				"phone" : "0403473978",			
+				"lat" : -16.918188,
+				"lon" : 145.759872
+			}
+		]
+	}
+}
