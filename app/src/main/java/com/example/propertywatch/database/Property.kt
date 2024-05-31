@@ -6,7 +6,7 @@ import java.io.Serializable
 import java.util.UUID
 
 @Entity
-data class PropertyWatchList(
+data class Property(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val address: String,
     val price: Int,

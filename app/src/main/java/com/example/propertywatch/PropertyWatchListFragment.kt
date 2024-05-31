@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.propertywatch
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,19 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.propertywatch.R
 import com.example.propertywatch.database.PropertyRepository
-import com.example.propertywatch.database.PropertyWatchList
+import com.example.propertywatch.database.Property
 import com.example.propertywatch.database.PropertyWatchListViewModel
 
 class PropertyWatchListFragment : Fragment() {
-    private val properties = mutableListOf<PropertyWatchList>()
-    private lateinit var propertyWatchListAdapter: PropertyWatchListAdapter
-    private lateinit var propertyWatchListViewModel: PropertyWatchViewModel
-    private lateinit var mPropertyViewModel: PropertyWatchListViewModel
+
+    private lateinit var mPropertyListViewModel: PropertyWatchListViewModel
+    private lateinit var propertyWatchViewModel: PropertyWatchViewModel
+    private val properties = mutableListOf<Property>()
 
     companion object {
         fun newInstance() = PropertyWatchListFragment()
@@ -27,10 +25,8 @@ class PropertyWatchListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val context = activity as ViewModelStoreOwner
-
-        mPropertyViewModel = ViewModelProvider(context).get(PropertyWatchListViewModel::class.java)
-        propertyWatchListViewModel = ViewModelProvider(context).get(PropertyWatchViewModel::class.java)
+        mPropertyListViewModel = ViewModelProvider(this).get(PropertyWatchListViewModel::class.java)
+        propertyWatchViewModel = ViewModelProvider(this).get(PropertyWatchViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -42,17 +38,18 @@ class PropertyWatchListFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.property_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        mPropertyViewModel.propertyList.observe(viewLifecycleOwner, Observer { propertyList ->
+        mPropertyListViewModel.propertyList.observe(viewLifecycleOwner, Observer { propertyList ->
             if (propertyList.isEmpty()) {
-                PropertyRepository.loadTestData()  // triggers observer to run again as data will change
-                return@Observer
+                PropertyRepository.loadTestData()
+            } else {
+                recyclerView.adapter = PropertyWatchListAdapter(propertyList)
             }
-            recyclerView.adapter = PropertyWatchListAdapter(propertyList)
         })
 
-        propertyWatchListViewModel.propertyItemLiveData.observe(viewLifecycleOwner, Observer { propertyItems ->
-            val propertyList = propertyItems.map { propertyItem ->
-                PropertyWatchList(
+        propertyWatchViewModel.propertyItemLiveData.observe(viewLifecycleOwner, Observer { propertyItems ->
+            val newProperties = propertyItems.map { propertyItem ->
+                Property(
+                    id = propertyItem.id,
                     address = propertyItem.address,
                     price = propertyItem.price,
                     phone = propertyItem.phone,
@@ -60,9 +57,11 @@ class PropertyWatchListFragment : Fragment() {
                     lon = propertyItem.lon
                 )
             }
-            properties.clear()
-            properties.addAll(propertyList)
-            PropertyRepository.get().addProperties(properties)
+
+
+            //recyclerView.adapter = PropertyWatchListAdapter(newProperties)
+            PropertyRepository.get().saveProperties(newProperties)
+
         })
 
         return view

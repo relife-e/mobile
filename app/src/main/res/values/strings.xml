@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PropertyWatch</string>
-    <string name="email_subject">Property Details</string>
-    <string name="email_body">Address: %1$s\nPrice: %2$s\nPhone: %3$s\nLocation: %4$s, %5$s</string>
+    <string name="email_subject">Investment Property Advice</string>
+    <string name="email_body">I would like to recommend this property at %1$s listed for $%2$d</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDjdUSvsHq08gB0Bg-JUv_S_z85bSvE1t0</string>
 </resources>

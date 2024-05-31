@@ -1,4 +1,5 @@
-package com.example.myapplication
+package com.example.propertywatch
+
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,10 +9,10 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.propertywatch.Maps.MapsActivity
-import com.example.propertywatch.R
-import com.example.propertywatch.database.PropertyWatchList
+import com.example.propertywatch.database.Property
 
-class PropertyWatchListAdapter(private val properties: List<PropertyWatchList>) : RecyclerView.Adapter<PropertyWatchListAdapter.ViewHolder>() {
+
+class PropertyWatchListAdapter(private val properties: List<Property>) : RecyclerView.Adapter<PropertyWatchListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.property_watch_list, parent, false)
@@ -27,7 +28,7 @@ class PropertyWatchListAdapter(private val properties: List<PropertyWatchList>) 
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
-        private lateinit var property: PropertyWatchList
+        private lateinit var property: Property
 
         init {
             view.setOnClickListener(this)
@@ -37,14 +38,14 @@ class PropertyWatchListAdapter(private val properties: List<PropertyWatchList>) 
             }
         }
 
-        fun bind(property: PropertyWatchList) {
+        fun bind(property: Property) {
             this.property = property
             val addressView: TextView = view.findViewById(R.id.address)
             val priceView: TextView = view.findViewById(R.id.price)
             val phoneNumView: TextView = view.findViewById(R.id.phoneNum)
 
             addressView.text = property.address
-            priceView.text = "$" + property.price.toString()
+            priceView.text = "$${property.price}"
             phoneNumView.text = property.phone
         }
 
@@ -55,9 +56,12 @@ class PropertyWatchListAdapter(private val properties: List<PropertyWatchList>) 
             v.context.startActivity(intent)
         }
 
-        private fun sendEmail(property: PropertyWatchList) {
+        private fun sendEmail(property: Property) {
+
+            val emailBody = view.context.resources.getString(R.string.email_body, property.address, property.price)
+
             val emailSubject = view.context.resources.getString(R.string.email_subject)
-            val emailBody = "Address: ${property.address}\nPrice: ${property.price}\nPhone: ${property.phone}\nLocation: ${property.lat}, ${property.lon}"
+
 
             val intent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
